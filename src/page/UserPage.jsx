@@ -2,28 +2,31 @@ import React, { useState, useEffect } from 'react'
 import { Link, useParams} from 'react-router-dom';
 import { getUser } from '../features/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from '../utils/axios'
+import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 export const UserPage = () => {
     const [userRepo, setUserRepo] = useState([]);
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.user);
     const params = useParams();
-    const owner = params.name
+    const owner = params.name;
+    const navigate = useNavigate();
     useEffect(() => {
         dispatch(getUser(params))
-        fetchRepo()
+        fetchRepo(owner)
     }, []);
 
     
 
-    const fetchRepo = async() =>{
+    const fetchRepo = async(owner) =>{
         try{
-          const { data } = await axios.get(`/users/${owner}/repos`);
+          const { data } = await axios.get(`https://api.github.com/users/${owner}/repos`);
           setUserRepo(data)
         
       }catch(err){
-        console.log(err)
+        alert(err.message)
+        navigate('/');
       }
       }
     return (
@@ -42,15 +45,11 @@ export const UserPage = () => {
                 </div>
                 <div className="col" style={{overflow: 'auto', maxHeight: '100vh'}}>
                     {userRepo.map((repo)=>(
-                        <Link to={`/${owner}/${repo.name}`}>
-                        <div className="card">
+                        <Link  data-testid='repo-item' to={`/${owner}/${repo.name}`}>
+                        <div key={repo.id} className="card">
                             <div className="card-body">
                             <h4 className='card-title'>{repo.name}</h4>
-                            <p className="card-text"><small className='text-body-secondary'><a href={repo.html_url}
-                            onClick={(e) => {
-                                e.preventDefault(); 
-                                window.location.href = repo.html_url; 
-                              }}>{repo.html_url}</a></small></p>
+                            <p className="card-text"><small className='text-body-secondary'>{repo.html_url}</small></p>
                             <p className="card-text">{repo.description}</p>
                         </div>
                         </div>

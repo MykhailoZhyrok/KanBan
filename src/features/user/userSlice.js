@@ -1,7 +1,6 @@
-import axios from '../../utils/axios';
 import {createSlice} from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
+import axios from 'axios'
 const initialState = {
     user: [],
     state: null,
@@ -11,11 +10,12 @@ const initialState = {
 export const getUser = createAsyncThunk(
     'user/fetch', async (user)=>{
         try{
-            const data = await axios.get(`/users/${user.name}`)
+            const data = await axios.get(`https://api.github.com/users/${user.name}`)
             
             return data.data
         }catch(err){
-            console.log(err)
+            console.log(err);
+            throw(err);
 
         }
     }

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { getIssue } from '../features/issue/issueSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-
 export const Header = (props) => {
   const [repoUrl, setRepoUrl] = useState('');
   const dispatch = useDispatch()
-  // const { data} = useSelector(state => state.issue);
+
   const params = useParams();
   const owner = params.name;
   const repoName = params.repos;
@@ -52,13 +51,13 @@ export const Header = (props) => {
   };
 
   return (
-    <div>
-      <div class="input-group mb-3 mt-3">
+    <div data-testid="repo-page">
+      <div className="input-group mb-3 mt-3">
         <input type="text"
           placeholder="Enter repository URL"
           value={repoUrl}
-          onChange={(e) => setRepoUrl(e.target.value)} class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2"/>
-          <button class="btn btn-outline-secondary" onClick={handleLoadIssues} type="button" id="button-addon2">Button</button>
+          onChange={(e) => setRepoUrl(e.target.value)} className="form-control" aria-label="Recipient's username" aria-describedby="button-addon2"/>
+          <button className="btn btn-outline-secondary" onClick={handleLoadIssues} type="button" id="button-addon2">Button</button>
       </div>
       {owner ? (
         <div className="d-flex flex-wrap align-items-center text-normal">

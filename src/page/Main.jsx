@@ -35,10 +35,10 @@ export const Main=()=> {
   return (
    
     <div className="container ">
-       <Header setTasks={setTasks} tasks={tasks}/>
+       <Header setTasks={setTasks}/>
       <div className="row custom-vh-90">
         {taskStatus.map((status) =>
-          <Column tasks={tasks} statusName={status.name} 
+          <Column key={status.name} tasks={tasks} statusName={status.name} 
           draggedTaskId={draggedTaskId} 
           setDraggedTaskId={setDraggedTaskId} 
           statusValue={status.value} 

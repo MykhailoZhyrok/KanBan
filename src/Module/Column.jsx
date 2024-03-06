@@ -41,7 +41,7 @@ export const Column = (props) => {
       onDragOver={(e)=>e.preventDefault()}
       onDrop={(e)=>onDragBoard(e, props.statusValue)}>
       {Array.isArray(props.tasks) && props.tasks.filter((task)=>task.state===props.statusValue).map((task)=>(
-        <div className='card m-3'
+        <div key={task.created_at} data-testid='issue-item' className='card m-3'
         onDragOver={(e)=>e.preventDefault()}
         onDragLeave={(e)=>e.preventDefault()}
         onDragStart={(e)=>dragStartHandler(e, task)}
