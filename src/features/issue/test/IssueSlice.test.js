@@ -1,4 +1,4 @@
-import { getIssue } from '../../features/issue/issueSlice';
+import { getIssue } from '../issueSlice';
 import axios from 'axios';
 
 
